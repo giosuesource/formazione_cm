@@ -1,11 +1,11 @@
 - name: configurare un Docker Registry
   hosts: localhost
-#  connection: local
-  become: true
-  
+    connection: local
+    become: true
+    use_backend: dnf4
   tasks:
     - name: install Docker
-      dnf:
+      yum:
         name: docker-ce
         state: present
   
@@ -39,4 +39,3 @@
 #        exposed_ports:
 #          - "5000"
 #          - "5000":"5000"
-
