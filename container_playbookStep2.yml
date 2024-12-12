@@ -1,0 +1,33 @@
+- name: doppio container
+  hosts: all
+  become: yes
+  tasks:
+    - name: Docker install 
+      yum:
+        name: docker-ce
+        state: present
+        
+    - name: start docker
+      service: 
+        state: started
+        enabled: yes
+        
+        
+    - name: pull image
+      community.docker.docker_image: 
+        image: redhat/ubi9
+        state: present
+        
+    - name: pull seconda image
+      community.docker.docker_image: 
+      image: ubuntu:22.04
+        state: present
+
+    - name: crea container in ascolto su porta 22
+      docker_container:
+        name: Container_primo
+        image: redhat/ubi9
+        exposed_ports:
+          - "22"
+        published_ports:
+          - "22-22" #devo continuare

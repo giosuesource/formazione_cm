@@ -1,0 +1,34 @@
+- name: configurare un Docker Registry
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: install Docker
+      yum:
+        name: docker-ce
+        state: present
+  
+    - name: start Docker
+      service:
+        state: started
+        enabled: yes
+    
+    - name: pull image
+      community.docker.docker_image:
+        name: hello-world
+        state: present
+      
+    - name: crea containerQ
+      docker_container:
+        name: ContainerQ
+        image: hello-world
+        state: started
+
+    - name: configura registry Docker
+      docker_container: 
+        name :"{{Docker-registro}}"
+        image: registry:2
+        state: started
+        exposed_ports:
+          - "5000"
+          - "5000":"5000"
