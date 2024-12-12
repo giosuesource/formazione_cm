@@ -24,11 +24,17 @@
         image: hello-world
         state: started
 
-    - name: configura registry Docker
-      docker_container: 
-        name :"{{Docker-registro}}"
-        image: registry:2
-        state: started
-        exposed_ports:
-          - "5000"
-          - "5000":"5000"
+    - name: Log into private registry
+      docker_login:
+        registry: your.private.registry.io
+        username: "InserireUsername"
+        password: "inserirePassword"
+
+#    - name: configura registry Docker
+#      docker_container: 
+#        name :"{{Docker-registro}}"
+#        image: registry:2
+#        state: started
+#        exposed_ports:
+#          - "5000"
+#          - "5000":"5000"
