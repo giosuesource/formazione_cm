@@ -1,0 +1,39 @@
+ - name: containerB
+   hosts: all
+   become: yes
+   tasks:
+    - name: Docker install 
+      yum:
+        name: docker-ce
+        state: present
+        
+    - name: start docker
+      service: 
+        state: started
+        enabled: yes
+        
+    - name: pull seconda image
+      community.docker.docker_image: 
+        image: ubuntu:22.04
+        state: present
+
+    - name: crea container in ascolto su porta 22
+      docker_container:
+        name: Container_primo
+        image: ubuntu:22.04
+        exposed_ports:
+          - "22"
+        published_ports:
+          - "22-22" #devo continuare
+
+    - name: genera Keys
+      community.crypto.openssh_keypair:
+      #  path: /tmp/id_ssh_rsa
+        path: /home/giosue/.ssh/id_rsa.pub
+        passphrase: super_secret_password
+        
+    - name: Set authorized key
+      ansible.posix.authorized_key:
+        user: giosue
+        state: present
+        key: "{{ lookup('file', '/home/giosue/.ssh/id_rsa.pub') }}"

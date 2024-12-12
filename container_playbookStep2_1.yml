@@ -1,4 +1,4 @@
-- name: doppio container
+- name: containerA
   hosts: all
   become: yes
   tasks:
@@ -12,15 +12,9 @@
         state: started
         enabled: yes
         
-        
     - name: pull image
       community.docker.docker_image: 
         image: redhat/ubi9
-        state: present
-        
-    - name: pull seconda image
-      community.docker.docker_image: 
-      image: ubuntu:22.04
         state: present
 
     - name: crea container in ascolto su porta 22
@@ -32,5 +26,14 @@
         published_ports:
           - "22-22" #devo continuare
 
-
-     
+    - name: genera Keys
+      community.crypto.openssh_keypair:
+      #  path: /tmp/id_ssh_rsa
+        path: /home/giosue/.ssh/id_rsa.pub
+        passphrase: super_secret_password
+        
+    - name: Set authorized key
+      ansible.posix.authorized_key:
+        user: giosue
+        state: present
+        key: "{{ lookup('file', '/home/giosue/.ssh/id_rsa.pub') }}"
