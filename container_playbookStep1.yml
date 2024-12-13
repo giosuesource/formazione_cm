@@ -1,42 +1,31 @@
 - name: configurare un Docker Registry
   hosts: localhost
-#  connection: local
   become: true
   
   tasks:
-    - name: install Docker
-      dnf:
-        name: docker-ce
-        state: present
+     - name: install Docker
+       homebrew:
+         name: docker
+         state: present
   
-    - name: start Docker
-      service:
-        state: started
-        enabled: yes
-    
-    - name: pull image
-      community.docker.docker_image:
-        name: hello-world
-        state: present
-      
-    - name: crea containerQ
-      docker_container:
-        name: ContainerQ
-        image: hello-world
-        state: started
+     - name: start Docker
+       service:
+         name: docker
+         state: started
+         enabled: yes
+     
+     - name: pull image
+       community.docker.docker_image:
+         name: registry:latest
+         state: present
 
-    - name: Log into private registry
-      docker_login:
-        registry: your.private.registry.io
-        username: "InserireUsername"
-        password: "inserirePassword"
-
-#    - name: configura registry Docker
-#      docker_container: 
-#        name :"{{Docker-registro}}"
-#        image: registry:2
-#        state: started
-#        exposed_ports:
-#          - "5000"
-#          - "5000":"5000"
+     - name: configura registry Docker
+       docker_container: 
+         name: Registry
+         image: registry:latest
+         state: started
+         exposed_ports:
+           - "5000"
+         published_ports:
+           - "5000" : "5000"
 

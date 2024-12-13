@@ -1,7 +1,7 @@
- - name: containerB
-   hosts: all
-   become: yes
-   tasks:
+- name: ContainerB
+  hosts: localhost
+  become: yes
+  tasks:
     - name: Docker install 
       yum:
         name: docker-ce
@@ -12,28 +12,56 @@
         state: started
         enabled: yes
         
-    - name: pull seconda image
+    - name: pull image
       community.docker.docker_image: 
-        image: ubuntu:22.04
+        image: ubuntu:latest
         state: present
 
     - name: crea container in ascolto su porta 22
       docker_container:
-        name: Container_primo
-        image: ubuntu:22.04
+        name: ContainerB
+        image: ubuntu:latest
         exposed_ports:
           - "22"
         published_ports:
-          - "22-22" #devo continuare
-
+          - "22:22" 
+          
     - name: genera Keys
       community.crypto.openssh_keypair:
       #  path: /tmp/id_ssh_rsa
         path: /home/giosue/.ssh/id_rsa.pub
-        passphrase: super_secret_password
-        
-    - name: Set authorized key
+ 
+    - name: Set key nella macchina host
       ansible.posix.authorized_key:
         user: giosue
         state: present
         key: "{{ lookup('file', '/home/giosue/.ssh/id_rsa.pub') }}"
+        
+    - name: Install sudo and SSH server in container
+      community.docker.docker_container_exec:
+        container: ContainerB
+        command: yum install -y sudo openssh-server
+        
+    - name: crea e aggiungi user al sudo group
+      community.docker.docker_container_exec:
+        container: ContainerB
+        command: > 
+          sh "useradd -m -s /bin/bash giosue && usermod -aG sudo giosue"
+
+    - name: Copy SSH public key to container
+      community.docker.docker_container_exec:
+        container: ContainerB
+        command: >
+          sh  "mkdir -p /home/giosue/.ssh &&
+               echo '{{ lookup('file', '/home/giosue/.ssh/id_rsa.pub') }}' >> /home/giosue/.ssh/authorized_keys &&
+               chmod 600 /home/giosue/.ssh/authorized_keys"
+
+    - name: Start SSH service in container
+      community.docker.docker_container_exec:
+        container: ContainerB
+        command: systemctl start sshd
+
+    - name: Enable SSH service in container
+      community.docker.docker_container_exec:
+        container: ContainerB
+        command: systemctl enable sshd
