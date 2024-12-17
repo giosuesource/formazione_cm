@@ -9,7 +9,8 @@
          state: present
   
      - name: start Docker
-       service:
+       #service:
+       homebrew_services:
          name: docker
          state: started
          enabled: yes
