@@ -10,7 +10,7 @@
   
     - name: start Docker
        #service:
-      homebrew_services:
+      community.general.launchd:
         name: docker
         state: started
         enabled: yes
