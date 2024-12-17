@@ -3,30 +3,29 @@
 #  become: true
   
   tasks:
-     - name: install Docker
-       homebrew:
-         name: docker
-         state: present
+    - name: install Docker
+      homebrew:
+        name: docker
+        state: present
   
-     - name: start Docker
+    - name: start Docker
        #service:
-       homebrew_services:
-         name: docker
-         state: started
-         enabled: yes
+      homebrew_services:
+        name: docker
+        state: started
+        enabled: yes
      
-     - name: pull image
-       community.docker.docker_image:
-         name: registry:latest
-         state: present
+    - name: pull image
+      community.docker.docker_image:
+        name: registry:latest
+        state: present
 
-     - name: configura registry Docker
-       docker_container: 
-         name: Registry
-         image: registry:latest
-         state: started
-         exposed_ports:
-           - "5000"
-         published_ports:
-           - "5000:5000"
-
+    - name: configura registry Docker
+      docker_container: 
+        name: Registry
+        image: registry:latest
+        state: started
+        exposed_ports:
+          - "5000"
+        published_ports:
+          - "5000:5000"
