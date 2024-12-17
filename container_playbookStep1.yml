@@ -1,6 +1,6 @@
 - name: configurare un Docker Registry
   hosts: localhost
-  become: true
+#  become: true
   
   tasks:
      - name: install Docker
