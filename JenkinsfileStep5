@@ -4,7 +4,8 @@ pipeline {
     environment {
         GIT_CREDENTIAL = 'pass_git'
         DOCKER_CREDENTIAL = 'pass_docker'
-        DOCKER_IMAGE = ''
+        DOCKER_REGISTRY = 'localhost:5000'
+        DOCKER_IMAGE = 'ImageF'
         DATED_GIT_HASH = "${new SimpleDateFormat("yyMMddHHmmss").format(new Date())}${GIT_COMMIT.take(6)}"
     }
 

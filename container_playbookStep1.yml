@@ -27,5 +27,5 @@
          exposed_ports:
            - "5000"
          published_ports:
-           - "5000" : "5000"
+           - "5000:5000"
 
