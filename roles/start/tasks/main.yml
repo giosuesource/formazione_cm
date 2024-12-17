@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for start
+- name: run containerA
+  docker_container:
+    name: ContainerA
+    image: Image1
+    state: started
+    ports: 
+     - "8081:80"
+    
+- name: run containerB
+  containers.podman.podman_container:
+    name: ContainerB
+    image: Image2
+    state: started
+    ports: 
+     - "8082:80"

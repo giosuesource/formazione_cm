@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_CREDENTIAL = 'pass_git'
+        DOCKER_CREDENTIAL = 'pass_docker'
+        DOCKER_IMAGE = ''
+        DATED_GIT_HASH = "${new SimpleDateFormat("yyMMddHHmmss").format(new Date())}${GIT_COMMIT.take(6)}"
+    }
+
+   stages {
+
+    	stage('Checkout') {
+            steps {
+	          	checkout scm
+	           }
+        }
+
+	    
+		
+
+        stage('build') {
+            steps {
+                script {
+		    docker.build("giosuemanzo${DOCKER_IMAGE}:${DATED_GIT_HASH}")
+            }
+        }
+      }     
+
+ 	stage('Push') {
+            steps {
+                    script {
+			docker.withRegistry('https://index.docker.io/v1/', 'password_docker'){
+          def image = docker.image(${DOCKER_IMAGE}, ${DATED_GIT_HASH})
+          image.push()
+		              	}
+                  }
+             }
+         }
+        
+    }
+  }

@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for push_image
+- name: Tag e push 1
+  community.docker.docker_image:
+    name: Image1
+    repository: localhost:5000/Image1
+    tag: latest
+    push: true
+    source: local
+    
+- name: Tag e push 2
+  community.podman.podman_image:
+    name: Image2
+    repository: localhost:5000/Image2
+    tag: latest
+    push: true
+    source: local

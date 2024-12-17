@@ -1,0 +1,48 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for build_container
+- name: Docker install 
+  yum:
+    name: docker-ce
+    state: present
+        
+- name: start docker
+  service: 
+    state: started
+    enabled: yes
+        
+    - name: Build image
+      docker_image:
+        path: /path/to/dockerfile
+        name: Image1
+        source: build
+
+    - name: crea container in ascolto su porta 22
+      docker_container:
+        name: ContainerA
+        image: Image1
+        exposed_ports:
+          - "22"
+        published_ports:
+          - "22:22" 
+    
+- name: Podman install 
+  yum:
+    name: podmam
+    state: present
+        
+- name: start podman
+  service: 
+    state: started
+    enabled: yes
+        
+- name: Build a basic OCI image
+  containers.podman.podman_image:
+    name: Image1
+    path: /path/to/build/dir
+
+- name: crea container2 
+  containers.podman.podman_container:
+    name: ContainerB
+    image: image1
+

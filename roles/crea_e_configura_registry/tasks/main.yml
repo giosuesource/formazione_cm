@@ -1,0 +1,29 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for crea_e_configura_registry
+- name: install Docker
+  homebrew:
+    name: docker
+    state: present
+  
+- name: start Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+     
+- name: pull image
+  community.docker.docker_image:
+    name: registry:latest
+    state: present
+
+- name: configura registry Docker
+  docker_container: 
+    name: Registry
+    image: registry:latest
+    state: started
+    exposed_ports:
+      - "5000"
+    published_ports:
+      - "5000" : "5000"
+#
