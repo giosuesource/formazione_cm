@@ -1,0 +1,12 @@
+- name: Esecuzione roles
+  hosts: localhost
+  become: yes
+  vars: 
+    ./Dockerfile2_1
+    ./Dockerfile2_2
+    
+  roles: 
+    - role: build
+    - role: crea_e_configura_registry
+    - role: push_image
+    - role: start
