@@ -5,11 +5,12 @@
 
     - name: Build image
       docker_image:
-        name: image1
-        tag: latest
+        source: build
         build:
           path: ./
           dockerfile: Dockerfile2_1
+          name: image1
+          tag: latest
 
     - name: crea container in ascolto su porta 22
       docker_container:
