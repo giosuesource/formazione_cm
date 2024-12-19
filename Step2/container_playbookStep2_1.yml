@@ -8,7 +8,7 @@
         name: image1
         tag: latest
         build:
-          path: ./Step2
+          path: ./
           dockerfile: Dockerfile2_1
 
     - name: crea container in ascolto su porta 22
