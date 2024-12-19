@@ -13,7 +13,7 @@
     - name: crea container in ascolto su porta 22
       docker_container:
         name: ContainerA
-        image: Image1
+        image: image1
         exposed_ports:
           - "22"
         published_ports:
