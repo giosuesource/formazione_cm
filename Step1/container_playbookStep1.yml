@@ -4,7 +4,7 @@
   
   tasks:  
     - name: Start Docker service
-      service:
+      ansible.builtin.systemd:
         name: docker
         state: started
         enabled: yes
