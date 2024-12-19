@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'password_docker') {
-                        def image = docker.image("giosuemanzo${DOCKER_IMAGE}:${datedGitHash}")
+                        def image = docker.image("giosuemanzo${DOCKER_IMAGE}:${TAG}")
                         image.push()
                     }
                 }
