@@ -24,6 +24,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+		    echo "prova"
                     def DATED_GIT_HASH = new Date().format('yyyyMMddHHmmss')
                     echo "${DATED_GIT_HASH}"
 		    def TAG = "${DOCKER_IMAGE}:${env.DATED_GIT_HASH}"
