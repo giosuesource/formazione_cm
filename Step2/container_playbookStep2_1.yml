@@ -8,6 +8,7 @@
         path: .
         name: Image1
         source: build
+        dockerfile: Dockerfile2_1
 
     - name: crea container in ascolto su porta 22
       docker_container:
