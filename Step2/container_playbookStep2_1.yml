@@ -6,7 +6,7 @@
     - name: Build image
       docker_image:
         path: .
-        name: Image1
+        name: image1
         source: build
         dockerfile: Dockerfile2_1
 
