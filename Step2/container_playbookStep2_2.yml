@@ -5,9 +5,11 @@
 
     - name: Build image
       docker_image:
-        path: ./Dockerfile2_2
-        name: Image2
+        name: image2
         source: build
+        build:
+          path: ./Dockerfile2_2
+          dockerfile: Dockerfile2_2
 
     - name: crea container in ascolto su porta 22
       docker_container:
