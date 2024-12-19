@@ -4,10 +4,7 @@
   
   tasks:  
     - name: Start Docker service
-      ansible.builtin.systemd:
-        name: docker
-        state: started
-        enabled: yes
+      ansible.builtin.command: "open -a Docker"
      
     - name: pull image
       community.docker.docker_image:
