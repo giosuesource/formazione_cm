@@ -5,7 +5,7 @@
 
     - name: Build image
       docker_image:
-        path: .
+        path: ./Step2/container_playbookStep2_1
         name: image1
         source: build
         dockerfile: Dockerfile2_1
