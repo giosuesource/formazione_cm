@@ -7,7 +7,7 @@
       docker_image:
         path: ./Dockerfile2_1
         name: Image1
-        source: local
+        source: build
 
     - name: crea container in ascolto su porta 22
       docker_container:
