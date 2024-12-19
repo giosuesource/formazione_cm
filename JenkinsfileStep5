@@ -6,7 +6,6 @@ pipeline {
         DOCKER_CREDENTIAL = 'pass_docker'
         DOCKER_REGISTRY = 'localhost:5000'
         DOCKER_IMAGE = 'ImageF'
-	DATED_GIT_HASH = "new Date().format('yyyyMMddHHmmss')"
         GITHUB_TOKEN = credentials('token')
     }
 
@@ -25,8 +24,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    
-                    docker.build("giosuemanzo${DOCKER_IMAGE}:${DATED_GIT_HASH}")
+                    def DATED_GIT_HASH = "new Date().format('yyyyMMddHHmmss')"
+		    TAG = "${DOCKER_IMAGE}:${DATED_GIT_HASH}"
+                    docker.build("giosuemanzo${DOCKER_IMAGE}:${TAG}")
                 }
             }
         }
