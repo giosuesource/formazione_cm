@@ -15,8 +15,12 @@ RUN mkdir /var/run/sshd && \
 
 RUN echo 'genericuser ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
-RUN echo "$ssh_prv_key" > /home/genericuser/.ssh/id_rsa && \
+RUN mkdir -p /home/genericuser/.ssh && \
+    echo "$ssh_prv_key" > /home/genericuser/.ssh/id_rsa && \
     echo "$ssh_pub_key" > /home/genericuser/.ssh/id_rsa.pub && \
+    chmod 600 /home/genericuser/.ssh/id_rsa && \
+    chmod 644 /home/genericuser/.ssh/id_rsa.pub && \
+    chown -R genericuser:genericuser /home/genericuser/.ssh
 
 EXPOSE 22
 
