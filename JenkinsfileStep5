@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
 		    echo "prova"
-                    docker.withRegistry('https://index.docker.io/v1/', 'password_docker') {
+                    docker.withRegistry('DOCKER_REGISTRY', 'password_docker') {
                         def image = docker.image("giosuemanzo${DOCKER_IMAGE}:${TAG}")
                         image.push()
                     }
