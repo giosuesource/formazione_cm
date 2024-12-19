@@ -1,4 +1,4 @@
-FROM ubuntu:22
+FROM ubuntu:22.04
 
 ARG ssh_prv_key
 ARG ssh_pub_key
