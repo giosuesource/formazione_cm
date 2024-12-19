@@ -2,12 +2,7 @@
   hosts: localhost
   become: true
   
-  tasks:
-    - name: install Docker
-      service:
-        name: docker
-        state: present
-  
+  tasks:  
     - name: Start Docker service
       service:
         name: docker
