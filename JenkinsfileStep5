@@ -1,6 +1,3 @@
-import java.text.SimpleDateFormat
-import java.util.Date
-
 pipeline {
     agent any
 
@@ -9,7 +6,8 @@ pipeline {
         DOCKER_CREDENTIAL = 'pass_docker'
         DOCKER_REGISTRY = 'localhost:5000'
         DOCKER_IMAGE = 'ImageF'
-        DATED_GIT_HASH = "${new SimpleDateFormat("yyMMddHHmmss").format(new Date())}${GIT_COMMIT.take(6)}"
+       # DATED_GIT_HASH = "${new SimpleDateFormat("yyMMddHHmmss").format(new Date())}${GIT_COMMIT.take(6)}"
+	DATED_GIT_HASH = "new Date().format('yyyyMMddHHmmss')"
         GITHUB_TOKEN = credentials('token')
     }
 
@@ -28,11 +26,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def dateStr = new SimpleDateFormat("yyMMddHHmmss").format(new Date())
-                    def gitHash = GIT_COMMIT.take(6)
-                    def datedGitHash = "${dateStr}${gitHash}"
+                  #  def dateStr = new Date().format('yyyyMMddHHmmss')
+                    #def gitHash = GIT_COMMIT.take(6)
+                    #def datedGitHash = "${dateStr}${gitHash}"
                     
-                    docker.build("giosuemanzo${DOCKER_IMAGE}:${datedGitHash}")
+                    docker.build("giosuemanzo${DOCKER_IMAGE}:${DATED_GIT_HASH}")
                 }
             }
         }
