@@ -27,7 +27,7 @@ pipeline {
                     def DATED_GIT_HASH = new Date().format('yyyyMMddHHmmss')
                     echo "${DATED_GIT_HASH}"
 		    def TAG = "${DOCKER_IMAGE}:${env.DATED_GIT_HASH}"
-                    docker.build("giosuemanzo/${DOCKER_IMAGE}:${env.TAG}")
+                    docker.build("giosuemanzo/${DOCKER_IMAGE}:${TAG}")
                 }
             }
         }
