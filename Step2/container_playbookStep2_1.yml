@@ -7,7 +7,6 @@
       docker_image:
         path: ./Step2
         name: image1
-        source: build
         dockerfile: Dockerfile2_1
 
     - name: crea container in ascolto su porta 22
