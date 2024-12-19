@@ -5,10 +5,11 @@
 
     - name: Build image
       docker_image:
-        path: ./Step2
         name: image1
-        dockerfile: Dockerfile2_1
-        state: present
+        tag: latest
+        build:
+          path: ./Step2
+          dockerfile: Dockerfile2_1
 
     - name: crea container in ascolto su porta 22
       docker_container:
