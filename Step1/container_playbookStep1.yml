@@ -1,16 +1,15 @@
 - name: configurare un Docker Registry
   hosts: localhost
-#  become: true
+  become: true
   
   tasks:
     - name: install Docker
-      homebrew:
+      service:
         name: docker
         state: present
   
-    - name: start Docker
-       #service:
-      community.general.launchd:
+    - name: Start Docker service
+      service:
         name: docker
         state: started
         enabled: yes
