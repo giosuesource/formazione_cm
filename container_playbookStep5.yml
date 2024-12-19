@@ -1,63 +1,23 @@
 - name: ContainerStep5
-  hosts: all
+  hosts: localhost
   become : yes
   tasks:
   
-    - name: Install required packages
-      yum:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - yum-utils
-        - device-mapper-persistent-data
-        - lvm2
-        - python3
-        - python3-pip
-        
-    - name: Install Python dependencies
-      pip:
-        name: requests
-        state: present
-        
-    - name: Install Python dependencies
-      pip:
-        name: requests
-        state: present
-        
-    - name: Add Docker repository
-      yum_repository:
-        name: docker-ce
-        description: Docker CE repository
-        baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable
-        enabled: yes
-        gpgcheck: yes
-        gpgkey: https://download.docker.com/linux/rhel/gpg
-        
-    - name: Docker install 
-      yum:
-        name: docker-ce
-        state: present
-        
-    - name: start docker
-      service: 
-        name: docker
-        state: started
-        enabled: yes
+    - name: Start Docker service
+      ansible.builtin.command: "open -a Docker"
         
     - name: pull image
       community.docker.docker_image:
         name: jenkins/jenkins:lts
-        #image: ubuntu:latest
         source: pull
 
     - name: crea container in ascolto su porta 22
       docker_container:
         name: ContainerStep5
-#        image: ubuntu:latest
         image: jenkins/jenkins:lts
         exposed_ports:
           - "22"
         published_ports:
           - "2222:22" 
         ports:
-          - "8080:8080"  # Porta per l'interfaccia web di Jenkins
+          - "8080:8080"  
