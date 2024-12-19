@@ -8,6 +8,7 @@
         path: ./Step2
         name: image1
         dockerfile: Dockerfile2_1
+        state: present
 
     - name: crea container in ascolto su porta 22
       docker_container:
