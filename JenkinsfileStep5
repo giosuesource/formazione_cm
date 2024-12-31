@@ -24,7 +24,7 @@ pipeline {
                 script {
                     def DATED_GIT_HASH = new Date().format("yyyyMMdd-HHmmss")
                     
-		    def TAG = "${DOCKER_IMAGE}:${DATED_GIT_HASH}"
+		    def TAG = "esperimento:${DATED_GIT_HASH}"
 		    
                     def imageF = docker.build("${DOCKER_REGISTRY}:${TAG}")
                 }
