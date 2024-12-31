@@ -1,6 +1,6 @@
 pipeline {
-    agent {label 'ContainerStep5'
-		}
+    agent any
+	  
 
     environment {
         GIT_CREDENTIAL = 'pass_git'
