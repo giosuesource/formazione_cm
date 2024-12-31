@@ -4,9 +4,7 @@ pipeline {
 
     environment {
         GIT_CREDENTIAL = 'pass_git'
-        DOCKER_CREDENTIAL = 'pass_docker'
         DOCKER_REGISTRY = 'localhost:5000'
-        DOCKER_IMAGE = 'ImageF'
     }
 
    stages {
@@ -24,11 +22,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def DATED_GIT_HASH = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
+                    def DATED_GIT_HASH = new Date().format("yyyyMMdd-HHmmss")
                     
-		    def TAG = "${DOCKER_IMAGE}:${env.DATED_GIT_HASH}"
+		    def TAG = "${DOCKER_IMAGE}:${DATED_GIT_HASH}"
 		    
-                    docker.build("${DOCKER_REGISTRY}:${TAG}")
+                    def imageF = docker.build("${DOCKER_REGISTRY}:${TAG}")
                 }
             }
         }
@@ -36,11 +34,8 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                    docker.withRegistry('DOCKER_REGISTRY', 'password_docker') {
-                        def image = docker.image("giosuemanzo${DOCKER_IMAGE}:${TAG}")
-                        image.push()
-                    }
-                }
+                        image.push(imageF)
+      	              }
             }
         }
     }
