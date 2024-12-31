@@ -7,7 +7,6 @@ pipeline {
         DOCKER_CREDENTIAL = 'pass_docker'
         DOCKER_REGISTRY = 'localhost:5000'
         DOCKER_IMAGE = 'ImageF'
-        GITHUB_TOKEN = credentials('token')
     }
 
    stages {
