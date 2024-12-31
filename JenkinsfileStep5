@@ -24,12 +24,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def DATED_GIT_HASH = new Date().format('yyyyMMddHHmmss')
+                    def DATED_GIT_HASH = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
                     
 		    def TAG = "${DOCKER_IMAGE}:${env.DATED_GIT_HASH}"
 		    
-                    docker.build("${DOCKER_IMAGE}:${TAG}")
-		    echo "${DATED_GIT_HASH}"
+                    docker.build("${DOCKER_REGISTRY}:${TAG}")
                 }
             }
         }
@@ -37,7 +36,6 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-		    echo "prova"
                     docker.withRegistry('DOCKER_REGISTRY', 'password_docker') {
                         def image = docker.image("giosuemanzo${DOCKER_IMAGE}:${TAG}")
                         image.push()
