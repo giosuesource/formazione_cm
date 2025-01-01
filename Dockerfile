@@ -1,17 +1,9 @@
 FROM python:3.9
 
-WORKDIR /app 
+WORKDIR /app
 
-COPY . .  
+COPY . .
 
-COPY requirements.txt /app
+RUN pip install flask requests
 
-RUN pip3 install -r requirements.txt
-
-ENTRYPOINT ["python3"]
-
-CMD ["app.py"]
-
-EXPOSE 8000  
-
-
+CMD ["python", "app.py"]
