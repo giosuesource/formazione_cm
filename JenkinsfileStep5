@@ -24,9 +24,11 @@ pipeline {
                 script {
                     def DATED_GIT_HASH = new Date().format("yyyyMMdd-HHmmss")
                     
-		    def TAG = "esperimento:${DATED_GIT_HASH}"
-		    
-                    def imagef = docker.build("${DOCKER_REGISTRY}:${TAG}")
+		    def TAG = "esperimento-${DATED_GIT_HASH}"
+
+		    def image = docker.build("${DOCKER_REGISTRY}/esperimento:${TAG}")
+
+		    env.IMAGE_NAME = "${DOCKER_REGISTRY}/esperimento:${TAG}"
                 }
             }
         }
@@ -34,7 +36,7 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                        image.push(imagef)
+			docker.image(env.IMAGE_NAME).push()
       	              }
             }
         }
