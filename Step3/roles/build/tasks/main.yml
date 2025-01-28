@@ -33,6 +33,7 @@
         
 - name: start podman
   service: 
+    name: podman
     state: started
     enabled: yes
         
