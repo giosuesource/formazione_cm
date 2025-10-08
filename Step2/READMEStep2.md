@@ -1,5 +1,5 @@
 
-# Step. 2
+## Step. 2
 ### Descrizione esercizio:
 
 Lo scopo di questo esercizio è quello di utilizzare Ansible per creare dei playbooks che facciano la build di almeno due container con OS differenti
