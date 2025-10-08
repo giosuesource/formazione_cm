@@ -1,5 +1,5 @@
 
-# Step. 3
+## Step. 3
 ### Descrizione esercizio:
 
 Lo scopo di questo esercizio è quello di creare dei ruoli Ansible utilizzando le task dello step precedente. Le task devono avere le seguenti caratteristiche:
