@@ -1,5 +1,5 @@
 
-# Step. 4
+## Step. 4
 ### Descrizione esercizio:
 
 Lo scopo di questo esercizio è oscurare tutte le password (come quella degli utenti nei Dockerfile o user e password per il registry) utilizzando Ansible Vault.
